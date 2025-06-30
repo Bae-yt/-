@@ -34,44 +34,71 @@ export function ChatDashboard({ apiKey }: ChatDashboardProps) {
   };
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row gap-6">
-      {/* Configuration Panel */}
-      <div className="lg:w-1/3 xl:w-1/4">
-        <div className="sticky top-0">
-          <ChatConfig 
-            apiKey={apiKey} 
-            onConfigChange={handleConfigChange}
-          />
-        </div>
-      </div>
-
-      {/* Chat Interface */}
-      <div className="flex-1 flex flex-col min-h-0">
-        {isConfigValid() ? (
-          <ChatInterface
-            apiKey={apiKey}
-            mode={config.mode}
-            kbIds={config.kbIds}
-            agentUuid={config.agentUuid}
-            model={config.model}
-            maxToken={config.maxToken}
-            hybridSearch={config.hybridSearch}
-            networking={config.networking}
-            sourceNeeded={config.sourceNeeded}
-          />
-        ) : (
-          <div className="flex-1 flex items-center justify-center bg-gray-50 rounded-lg">
-            <div className="text-center text-gray-500">
-              <p className="text-lg mb-2">请先配置聊天参数</p>
-              <p className="text-sm">
-                {config.mode === 'knowledge-base' 
-                  ? '请选择至少一个知识库' 
-                  : '请选择一个Agent'
-                }
-              </p>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, var(--background) 0%, var(--accent) 100%)' }}>
+      <div className="max-w-7xl mx-auto p-8">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center space-x-4 bg-white rounded-full px-8 py-4 shadow-xl mb-6">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">智能聊天中心</h1>
+              <p className="text-red-500 font-medium">AI驱动的对话体验</p>
             </div>
           </div>
-        )}
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">基于知识库或Agent进行智能对话，体验流式响应的魅力</p>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {/* Configuration Panel - 放在顶部 */}
+          <div className="card-enhanced rounded-2xl">
+            <ChatConfig 
+              apiKey={apiKey} 
+              onConfigChange={handleConfigChange}
+            />
+          </div>
+
+          {/* Chat Interface - 放在下方 */}
+          <div className="card-enhanced rounded-2xl overflow-hidden" style={{ height: '70vh' }}>
+            {isConfigValid() ? (
+              <ChatInterface
+                apiKey={apiKey}
+                mode={config.mode}
+                kbIds={config.kbIds}
+                agentUuid={config.agentUuid}
+                model={config.model}
+                maxToken={config.maxToken}
+                hybridSearch={config.hybridSearch}
+                networking={config.networking}
+                sourceNeeded={config.sourceNeeded}
+              />
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-red-100 to-red-200 flex items-center justify-center">
+                    <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-red-900 mb-2">🚀 配置你的AI对话</h3>
+                  <p className="text-red-600 mb-4">
+                    {config.mode === 'knowledge-base' 
+                      ? '请在上方选择至少一个知识库开始对话' 
+                      : '请在上方选择一个Agent开始对话'
+                    }
+                  </p>
+                  <div className="flex justify-center space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

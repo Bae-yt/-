@@ -11,47 +11,53 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="text-xl font-bold text-gray-900">
-              QAnything
+    <nav className="nav-enhanced shadow-lg">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center space-x-12">
+            <Link href="/" className="text-2xl font-bold" style={{ color: 'var(--primary)' }}>
+              🔥 QAnything Pro
             </Link>
             
-            <div className="flex space-x-4">
+            <div className="flex space-x-2">
               <Link
                 href="/"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
                   isActive('/') && pathname === '/'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
+                    ? 'bg-primary text-white shadow-lg transform scale-105'
+                    : 'text-gray-700 hover:bg-primary-light hover:text-white hover:transform hover:scale-105'
                 }`}
               >
-                知识库管理
+                📚 知识库管理
               </Link>
               
               <Link
                 href="/agents"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
                   isActive('/agents')
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
+                    ? 'bg-primary text-white shadow-lg transform scale-105'
+                    : 'text-gray-700 hover:bg-primary-light hover:text-white hover:transform hover:scale-105'
                 }`}
               >
-                Agent管理
+                🤖 Agent管理
               </Link>
               
               <Link
                 href="/chat"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
                   isActive('/chat')
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-100'
+                    ? 'bg-primary text-white shadow-lg transform scale-105'
+                    : 'text-gray-700 hover:bg-primary-light hover:text-white hover:transform hover:scale-105'
                 }`}
               >
-                Stream对话
+                💬 Stream对话
               </Link>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-400 to-red-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
+              AI
             </div>
           </div>
         </div>
