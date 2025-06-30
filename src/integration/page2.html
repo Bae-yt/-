@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻梦旅游公司</title>
+    <style>
+        /* 使用更现代的 CSS 重置 */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background-color: #e8e5e0;
+            color: #5a5a5a;
+            line-height: 1.6;
+        }
+
+        /* 优化导航栏 */
+        nav {
+            background-color: rgba(107, 123, 126, 0.9); /* 半透明背景 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        nav a {
+            color: #f0ece2;
+            margin: 0 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #a8b8c0;
+            color: #3a4a4f;
+            transform: translateY(-3px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 添加英雄区域 */
+        .hero {
+            height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .btn {
+            background-color: #8a9a9b;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #7a8a8b;
+            transform: translateY(-3px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            padding: 60px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 优化目的地卡片 */
+        .destination {
+            display: flex; /* 使用弹性布局 */
+            flex-direction: row; /* 水平排列子元素 */
+            background-color: #f0ece2;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .dest-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            flex: 1; /* 图片部分占据 1 份空间 */
+            display: flex; /* 让图片在容器内居中 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            margin-right: 20px; /* 与右侧信息部分添加间隔 */
+        }
+
+        .dest-image img {
+            width: 100%; /* 图片宽度充满容器 */
+            height: auto; /* 保持图片比例 */
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .dest-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dest-image:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .explore-btn {
+            background-color: #8a9a9b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            background-color: #7a8a8b;
+        }
+
+        .dest-info {
+            flex: 2; /* 信息部分占据 2 份空间 */
+        }
+
+        .attractions-and-tips {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .attractions, .travel-tip {
+            flex: 1;
+        }
+
+        .attractions h4, .travel-tip h4 {
+            color: #6b7b7e;
+            margin-bottom: 10px;
+        }
+        .destination:hover {
+            background-color: #e5e1d7;
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .destination img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 0;
+        }
+
+        /* 其他样式保持不变 */
+        .container {
+            padding: 30px;
+            padding-bottom: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        section {
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: #6b7b7e;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a8b8c0;
+            transition: all 0.3s ease;
+        }
+        
+        h2:hover {
+            color: #5a6b6e;
+            transform: translateX(5px);
+        }
+        
+        h3 {
+            color: #7c8b8c;
+            transition: all 0.3s ease;
+        }
+        
+        h3:hover {
+            color: #6b7b7e;
+            letter-spacing: 1px;
+        }
+        
+        .destination {
+            background-color: #f0ece2; /* 莫兰迪浅米色 */
+            margin: 25px 0;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .destination:hover {
+            background-color: #e5e1d7;
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .destination img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .destination img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        li {
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        li:hover {
+            background-color: #d9d4cc; /* 莫兰迪浅灰色 */
+            padding-left: 15px;
+        }
+        
+        a {
+            color: #7c8b8c;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #6b7b7e;
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: #6b7b7e;
+            color: #f0ece2;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        footer:hover {
+            background-color: #5a6b6e;
+            padding: 25px 20px;
+        }
+        
+        p {
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        p:hover {
+            color: #4a4a4a;
+        }
+    </style>
+    <meta name="description" content="寻梦旅游公司提供中国各地的旅游服务，带您体验最美风景和文化。">
+    <meta name="keywords" content="寻梦旅游公司, 旅游服务, 中国旅游">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="#home">首页</a>
+        <a href="#destinations">目的地</a>
+        <a href="#about">关于我们</a>
+        <a href="#contact">联系我们</a>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <div class="hero">
+        <h1>寻梦旅游公司</h1>
+        <p>探索中国，发现美好</p>
+        <a href="#destinations" class="btn">查看目的地</a>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <section id="home">
+            <style>
+                /* 让 section 内的 h2 和 p 居中对齐 */
+                section h2, section p {
+                    text-align: center;
+                }
+            </style>
+            <h2>欢迎来到寻梦旅游公司</h2>
+            <p>我们提供中国各地的旅游服务，带您体验最美
+                的风景和文化。</p>
+        </section>
+
+        <section id="destinations">
+            <h2>热门目的地</h2>
+            <!-- 西安板块 -->
+            <!-- 以西安板块为例 -->
+            <div class="destination">
+                <!-- 图片部分 -->
+                <div class="dest-image">
+                    <img src="https://bpic.588ku.com/video_listen/588ku_pic/23/07/30/cad1e8a51dd196842eea3ab0c2edc34b.jpg!/fh/196/unsharp/true" alt="西安">
+                    <div class="image-overlay">
+                        <a href="#xiana" class="explore-btn">探索西安</a>
+                    </div>
+                </div>
+                <!-- 城市信息部分 -->
+                <div class="dest-info">
+                    <h3>西安</h3>
+                    <!-- 城市简介放在图片下方 -->
+                    <p>西安，这座古老的十三朝古都，犹如一部厚重的历史书卷，承载着华夏文明的灿烂辉煌。它是中国历史文化名城，拥有兵马俑、大雁塔等著名景点，每一处都诉说着过往的故事。</p>
+                    <!-- 必游景点和旅游小贴士放在同一区域 -->
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ul>
+                                <li>兵马俑 - 世界第八大奇迹，庞大的地下军团震撼人心。</li>
+                                <li>大雁塔 - 玄奘法师译经之地，证明了佛教文化的传播。</li>
+                                <li>钟鼓楼 - 古代城市的报时中心，古韵悠长。</li>
+                            </ul>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>来西安旅行，除了品尝肉夹馍、羊肉泡馍、凉皮等经典美食外，还可以去回民街感受浓郁的民族风情，那里有各种特色小吃和手工艺品。购买纪念品时，建议去正规店铺，避免买到劣质产品。参观兵马俑时，最好请一位导游讲解，这样能更好地了解其历史和文化价值。另外，西安气候干燥，记得携带保湿护肤品和充足的饮用水。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 成都板块 -->
+            <!-- 类似西安板块结构，替换图片和文字信息 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://img95.699pic.com/photo/50045/1238.jpg_wh300.jpg" alt="成都">
+                    <div class="image-overlay">
+                        <a href="#chengdub" class="explore-btn">探索成都</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>成都</h3>
+                    <p>成都，一座来了就不想走的城市，以悠闲的生活节奏和丰富的美食闻名。这里是美食之都，拥有大熊猫基地、宽窄巷子等热门景点，让人沉浸在欢乐与惬意之中。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ol>
+                                <li>大熊猫基地 - 与憨态可掬的大熊猫亲密接触，感受大自然的萌趣。</li>
+                                <li>宽窄巷子 - 古色古香的历史街区，体验老成都的VENTREDE。</li>
+                                <li>都江堰 - 世界遗产，两千多年的水利工程奇迹。</li>
+                            </ol>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>在成都游玩，品尝火锅和串串香是必不可少的，但要注意成都的辣度较高，不太能吃辣的朋友可以选择微辣或鸳鸯锅。去大熊猫基地游玩，最好早点出发，早上熊猫们比较活跃。游览宽窄巷子时，可以穿上传统服饰拍照留念，同时还能淘到一些特色的成都纪念品。成都气候湿润，夏季出行记得携带雨具和防晒用品。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 上海板块 -->
+            <!-- 类似西安板块结构，替换图片和文字信息 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://file.moyublog.com/d/file/2020-11-18/a430d2362c713f19d101243439231039.jpg" alt="上海">
+                    <div class="image-overlay">
+                        <a href="#shanghaic" class="explore-btn">探索上海</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>上海</h3>
+                    <p>上海，这座现代化国际大都市，是东西方文化交融的璀璨明珠。外滩的万国建筑、东方明珠塔的璀璨灯火，彰显着它的繁华与魅力。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ul>
+                                <li>外滩 - 欣赏黄浦江两岸的壮丽风光，感受百年历史的沉淀。</li>
+                                <li>东方明珠塔 - 上海的标志性建筑，俯瞰城市全景。</li>
+                                <li>南京路步行街 - 购物者的天堂，体验都市的热闹与繁华。</li>
+                            </ul>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>游览上海，夜晚的外滩和陆家嘴不容错过，建议提前规划好路线，选择合适的观赏位置。参观东方明珠塔可以提前在官方网站或第三方平台购票，避免排队等待。在南京路步行街购物时，要注意辨别商品质量，遇到促销活动也要理性消费。上海公共交通发达，出行可以选择地铁或公交，既方便又快捷。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 北京板块 -->
+            <!-- 类似西安板块结构，替换图片和文字信息 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://pic3.zhimg.com/v2-232118cd4d2f566e6a09af6e72b6efbf_r.jpg" alt="北京">
+                    <div class="image-overlay">
+                        <a href="#beijingd" class="explore-btn">探索北京</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>北京</h3>
+                    <p>北京，作为中国的首都，是政治、文化和国际交往中心。故宫的红墙黄瓦、天安门的庄严肃穆、长城的雄伟壮丽，尽显皇家风范和历史底蕴。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ol>
+                                <li>故宫 - 明清皇家宫殿，证明了封建王朝的兴衰荣辱。</li>
+                                <li>天安门广场 - 世界上最大的城市广场，感受国家的威严。</li>
+                                <li>长城 - 万里长城永不倒，领略中华民族的坚韧与智慧。</li>
+                            </ol>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>参观故宫时，建议提前在官网预约门票，避免耽误行程。在天安门广场观看升旗仪式需要提前排队，注意保管好个人财物。前往长城可以选择八达岭、慕田峪等不同的路段，各有特色。品尝北京烤鸭时，全聚德、大董等老字号是不错的选择，但价格相对较高，可以根据自己的预算进行选择。北京冬季寒冷，记得携带保暖衣物。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 杭州板块 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://bpic.588ku.com/back_origin_min_pic/21/03/30/ccbf0b1e82912aacd0c6e04da74949a2.jpg!/fw/750/quality/99/unsharp/true/compress/true" alt="杭州">
+                    <div class="image-overlay">
+                        <a href="#hangzhou" class="explore-btn">探索杭州</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>杭州</h3>
+                    <p>杭州，素有“人间天堂”的美誉，以其秀丽的自然风光和深厚的历史文化底蕴闻名于世。西湖的湖光山色、灵隐寺的宁静祥和，都吸引着无数游客前来探寻。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ul>
+                                <li>西湖 - 中国首批国家重点风景名胜区，湖中有岛，岛中有湖，景色美不胜收。</li>
+                                <li>灵隐寺 - 中国佛教禅宗名刹之一，建筑雄伟壮观，充满了神秘的宗教氛围。</li>
+                                <li>西溪国家湿地公园 - 集城市湿地、农耕湿地、文化湿地于一体，生态环境优美。</li>
+                            </ul>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>游览西湖可以选择乘船游湖，欣赏不同角度的湖景；灵隐寺香火旺盛，参观时请注意礼仪；西溪湿地面积较大，建议乘坐电瓶车或游船游览，节省体力。杭州气候多变，出行前记得查看天气预报，携带雨具。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 三亚板块 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://www.visitsanya.com/upload/2022-09/166251376645558900.jpg" alt="三亚">
+                    <div class="image-overlay">
+                        <a href="#sanya" class="explore-btn">探索三亚</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>三亚</h3>
+                    <p>三亚，地处海南岛最南端，是中国著名的热带海滨旅游城市。这里有碧海蓝天、洁白沙滩和温暖的阳光，是度假、休闲的绝佳去处。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ol>
+                                <li>亚龙湾 - 享有“天下第一湾”的美誉，沙质细腻，海水清澈见底。</li>
+                                <li>蜈支洲岛 - 岛上风景优美，有丰富的海上娱乐项目，是潜水爱好者的天堂。</li>
+                                <li>南山文化旅游区 - 集佛教文化、热带海洋风光和民俗风情于一体，有著名的南山海上观音像。</li>
+                            </ol>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>三亚紫外线较强，出行务必做好防晒措施，携带防晒霜、太阳镜和遮阳帽。在蜈支洲岛游玩时，提前预订门票和海上项目，避免耽误行程。品尝海鲜建议选择正规餐厅，以免被宰。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 桂林板块 -->
+            <div class="destination">
+                <div class="dest-image">
+                    <img src="https://pic3.zhimg.com/v2-5e744fe08b3b8ff6f9bb9de1bd576c4d_r.jpg" alt="桂林">
+                    <div class="image-overlay">
+                        <a href="#guilin" class="explore-btn">探索桂林</a>
+                    </div>
+                </div>
+                <div class="dest-info">
+                    <h3>桂林</h3>
+                    <p>桂林以“山青、水秀、洞奇、石美”闻名天下，是中国山水风光的代表。漓江的山水画卷、阳朔的田园风光，让人流连忘返。</p>
+                    <div class="attractions-and-tips">
+                        <div class="attractions">
+                            <h4>必游景点</h4>
+                            <ul>
+                                <li>漓江 - 乘竹筏顺流而下，欣赏两岸奇峰罗列，感受“人在画中游”的意境。</li>
+                                <li>阳朔西街 - 充满异国情调的街道，有各种特色小店、酒吧和餐厅。</li>
+                                <li>龙脊梯田 - 规模宏大，线条行云流水，四季景色各异。</li>
+                            </ul>
+                        </div>
+                        <div class="travel-tip">
+                            <h4>旅行小贴士</h4>
+                            <p>游览漓江最佳方式是乘坐竹筏，建议提前预订船票。阳朔西街夜晚热闹非凡，可以体验当地的夜生活。龙脊梯田距离市区较远，可选择跟团游或包车前往。桂林气候湿润，夏季多雨，记得携带雨具。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>关于我们</h2>
+            <p>寻梦旅游公司成立于2005年，致力于为客户提供优质的国内旅游服务。我们的团队由经验丰富的导游和旅行专家组成，确保您的每一次旅行都充满乐趣和回忆。</p>
+        </section>
+
+        <section id="contact">
+            <h2>联系我们</h2>
+            <p>如果您有任何问题或需要预订旅行，请通过以下方式联系我们：</p>
+            <p>电话: <a href="tel:+13993014174">+13993014174</a></p>
+            <p>邮箱: <a href="mailto:info@dreamtravel.com">info@dreamtravel.com</a></p>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2025 寻梦旅游公司. 版权所有.</p>
+    </footer>
+
+</body>
+</html>
