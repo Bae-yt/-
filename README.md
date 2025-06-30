@@ -24,13 +24,13 @@
 
 **QAnything 运行截图**：
 
-![image-20250630233540538](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630233540538.png)
+![image-20250630233540538](./assets/image-20250630233540538.png)
 
-![image-20250630233556374](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630233556374.png)
+![image-20250630233556374](./assets/image-20250630233556374.png)
 
-![image-20250630233604324](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630233604324.png)
+![image-20250630233604324](./assets/image-20250630233604324.png)
 
-![image-20250630233844524](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630233844524.png)
+![image-20250630233844524](./assets/image-20250630233844524.png)
 
 ## WakaTime API 集成与展示
 
@@ -43,7 +43,7 @@
 
 **WakaTime API 集成与展示截图**：
 
-![image-20250630234009596](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630234009596.png)
+![image-20250630234009596](./assets/image-20250630234009596.png)
 
 ## Next.js 项目结构
 
@@ -62,9 +62,9 @@
 
 **Next.js 组织课程练习作业的运行截图**：
 
-![image-20250630234029953](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630234029953.png)
+![image-20250630234029953](./assets/image-20250630234029953.png)
 
-![image-20250630234036241](/Users/night/Documents/Codes/SaltyFish/250530-qanything-all/250530-qanything-5/assets/image-20250630234036241.png)
+![image-20250630234036241](./assets/image-20250630234036241.png)
 
 ## 项目运行指南
 
