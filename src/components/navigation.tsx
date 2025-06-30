@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export function Navigation() {
   const pathname = usePathname();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(path + "/");
@@ -57,16 +59,68 @@ export function Navigation() {
                 💬 Stream对话
               </Link>
 
-              <Link
-                href="/portfolio"
-                className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                  isActive("/portfolio")
-                    ? "bg-primary text-white shadow-lg transform scale-105"
-                    : "text-gray-700 hover:bg-primary-light hover:text-white hover:transform hover:scale-105"
-                }`}
-              >
-                🎨 过往作业展示
-              </Link>
+              <div className="relative">
+                <button
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                    isActive("/portfolio")
+                      ? "bg-primary text-white shadow-lg transform scale-105"
+                      : "text-gray-700 hover:bg-primary-light hover:text-white hover:transform hover:scale-105"
+                  }`}
+                >
+                  🎨 过往作业展示
+                </button>
+                {showDropdown && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50">
+                    <div className="py-2 border-b border-gray-200">
+                      <div className="px-4 py-1 text-xs font-semibold text-gray-500">
+                        CSS 学习示例
+                      </div>
+                      <Link
+                        href="/01.css.html（基础）.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        CSS基础知识
+                      </Link>
+                      <Link
+                        href="/02.css.html（进阶）.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        CSS进阶概念
+                      </Link>
+                      <Link
+                        href="/03-css.html（相对定位与绝对定位）.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        CSS定位详解
+                      </Link>
+                      <Link
+                        href="/04-css.html.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        JavaScript基础
+                      </Link>
+                    </div>
+                    <div className="py-2">
+                      <div className="px-4 py-1 text-xs font-semibold text-gray-500">
+                        旅游网站示例
+                      </div>
+                      <Link
+                        href="/page1.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        寻梦旅游-简约版
+                      </Link>
+                      <Link
+                        href="/page2.html"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        寻梦旅游-详细版
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 

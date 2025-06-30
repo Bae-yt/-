@@ -42,7 +42,7 @@ export function AgentForm({
       const updateData: UpdateAgentRequest = {
         uuid: agent.uuid,
       };
-      
+
       // 比较并添加变更的字段
       if (formData.botName !== agent.name) {
         updateData.botName = formData.botName;
@@ -71,7 +71,7 @@ export function AgentForm({
       if (formData.welcomeMessage !== (agent.welcomeMessage || "")) {
         updateData.welcomeMessage = formData.welcomeMessage;
       }
-      
+
       onSubmit(updateData);
     } else {
       const createData: CreateAgentRequest = {
@@ -103,14 +103,45 @@ export function AgentForm({
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg border">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">
         {isEditing ? "编辑Agent" : "创建Agent"}
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div className="md:col-span-2">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            提示设置
+          </label>
+          <textarea
+            name="botPromptSetting"
+            value={formData.botPromptSetting}
+            onChange={handleInputChange}
+            rows={3}
+            placeholder="你是一个XXX专家。"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            欢迎消息
+          </label>
+          <textarea
+            name="welcomeMessage"
+            value={formData.welcomeMessage}
+            onChange={handleInputChange}
+            rows={4}
+            placeholder="您好，我是您的专属机器人，请问有什么可以帮您呢？"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Agent名称 *
           </label>
           <input
@@ -119,12 +150,12 @@ export function AgentForm({
             value={formData.botName}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Agent描述 *
           </label>
           <textarea
@@ -133,13 +164,13 @@ export function AgentForm({
             onChange={handleInputChange}
             required
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
         {!isEditing && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="md:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               知识库ID (用逗号分隔) *
             </label>
             <input
@@ -149,132 +180,100 @@ export function AgentForm({
               onChange={handleInputChange}
               required
               placeholder="KB248e8e079642491383596f63c2ab069a_240430,KB..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              模型 *
-            </label>
-            <select
-              name="model"
-              value={formData.model}
-              onChange={handleInputChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="QAnything 4o mini">QAnything 4o mini</option>
-              <option value="QAnything 16k">QAnything 16k</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              最大Token *
-            </label>
-            <select
-              name="maxToken"
-              value={formData.maxToken}
-              onChange={handleInputChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="1024">1024</option>
-              <option value="2048">2048</option>
-              <option value="4096">4096</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              混合搜索
-            </label>
-            <select
-              name="hybridSearch"
-              value={formData.hybridSearch}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="false">禁用</option>
-              <option value="true">启用</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              网络搜索
-            </label>
-            <select
-              name="networking"
-              value={formData.networking}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="false">禁用</option>
-              <option value="true">启用</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              需要来源
-            </label>
-            <select
-              name="needSource"
-              value={formData.needSource}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="false">不需要</option>
-              <option value="true">需要</option>
-            </select>
-          </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            混合搜索
+          </label>
+          <select
+            name="hybridSearch"
+            value={formData.hybridSearch}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+          >
+            <option value="false">禁用</option>
+            <option value="true">启用</option>
+          </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            提示设置
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            网络搜索
           </label>
-          <textarea
-            name="botPromptSetting"
-            value={formData.botPromptSetting}
+          <select
+            name="networking"
+            value={formData.networking}
             onChange={handleInputChange}
-            rows={3}
-            placeholder="你是一个XXX专家。"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+          >
+            <option value="false">禁用</option>
+            <option value="true">启用</option>
+          </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            欢迎消息
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            需要来源
           </label>
-          <textarea
-            name="welcomeMessage"
-            value={formData.welcomeMessage}
+          <select
+            name="needSource"
+            value={formData.needSource}
             onChange={handleInputChange}
-            rows={4}
-            placeholder="您好，我是您的专属机器人，请问有什么可以帮您呢？"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+          >
+            <option value="false">不需要</option>
+            <option value="true">需要</option>
+          </select>
         </div>
 
-        <div className="flex gap-3 pt-4">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            模型 *
+          </label>
+          <select
+            name="model"
+            value={formData.model}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+          >
+            <option value="QAnything 4o mini">QAnything 4o mini</option>
+            <option value="QAnything 16k">QAnything 16k</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            最大Token *
+          </label>
+          <select
+            name="maxToken"
+            value={formData.maxToken}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+          >
+            <option value="1024">1024</option>
+            <option value="2048">2048</option>
+            <option value="4096">4096</option>
+          </select>
+        </div>
+
+        <div className="md:col-span-2 flex gap-4 pt-6">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
           >
             {isEditing ? "更新Agent" : "创建Agent"}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="flex-1 bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors duration-200"
           >
             取消
           </button>
